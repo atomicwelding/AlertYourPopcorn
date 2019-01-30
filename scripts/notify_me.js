@@ -6,7 +6,7 @@
 let state = false;
 let TwitchInfos = { 
     api:'https://api.twitch.tv/',
-    client_id:'y1x5jgzrxcoysvzq2kpxkcs1c733cv',
+    client_id:'SECRET_TOKEN',
     channel:'GrabYourPopcorn',
     updateRate: (1/12)       // in minutes
 }
