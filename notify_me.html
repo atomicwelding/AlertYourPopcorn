@@ -1,0 +1,39 @@
+<script>
+let state = false;
+let TwitchInfos = { 
+    api:'https://api.twitch.tv/',
+    client_id:'y1x5jgzrxcoysvzq2kpxkcs1c733cv',
+    channel:'GrabYourPopcorn',
+    updateRate: (1/2)       // in minutes
+
+~function updateStatus() {
+
+    var port = chrome.extension.connect({
+        name:"b2p"
+    });
+
+    let req = new XMLHttpRequest();
+    req.open('GET', TwitchInfos.api+'helix/streams?user_login='+TwitchInfos.channel);
+    req.setRequestHeader('Client-ID', TwitchInfos.client_id);
+
+    req.onload = function() {
+        res = JSON.parse(this.response);
+        if(res.data[0] && !state) {
+            port.postMessage('connected');
+            new Notification('GrabYourPopcorn', {body:'She just starts a stream :D', icon:'resources/icon.png'});
+            state = true;
+        }
+        else if(!res.data[0]) {
+            port.postMessage('disconnected')
+            state = false;
+        }
+        else {
+            port.postMessage('connected');
+        }
+    }
+
+    req.send();
+
+    setTimeout(updateStatus, 1000*60*TwitchInfos.updateRate);
+}();
+</script>

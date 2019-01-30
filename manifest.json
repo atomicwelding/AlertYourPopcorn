@@ -1,0 +1,17 @@
+{
+    "manifest_version": 2,
+  
+    "name": "AlertYourPopcorn",
+    "version": "1.0",
+  
+    "browser_action": {
+        "default_icon":"resources/icon.png",
+        "default_popup": "main.html"
+    },
+
+    "background": {
+        "scripts": ["scripts/notify_me.js"]
+    },
+
+    "permissions": ["notifications", "https://api.twitch.tv/"]
+  }
